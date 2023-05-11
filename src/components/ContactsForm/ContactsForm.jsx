@@ -21,16 +21,15 @@ function ContactForm({ onClose }) {
 
         const newElement = { id: nanoid(), name, number };
 
-        contacts.some(contact => contact.name === name)
-        ? Report.warning(
-            `${name}`,
-            'This user is already in the contact list.',
-            'OK',
+        if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+            return Report.warning(
+                `${name}`,
+                'This user is already in the contact list.',
+                'OK',
             )
-        : dispatch(add(newElement));
-
+        }
+        dispatch(add(newElement));
         reset();
-        onClose();
     };
 
     const reset = () => {
